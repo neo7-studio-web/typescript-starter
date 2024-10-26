@@ -1,5 +1,5 @@
 
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class Cat {
@@ -11,4 +11,10 @@ export class Cat {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @CreateDateColumn()
+    createdDate: Date
+
+  @UpdateDateColumn()
+  updatedDate: Date
 }
