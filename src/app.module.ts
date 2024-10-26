@@ -5,6 +5,7 @@ import { CatsModule } from './cats/cats.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { UtilsService } from './utils/utils.service';
+import { UtilsModule } from './utils/utils.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UtilsService } from './utils/utils.service';
       synchronize: true,
     }),
     CatsModule,
+    UtilsModule,
   ],
   controllers: [AppController],
   providers: [AppService, UtilsService],
