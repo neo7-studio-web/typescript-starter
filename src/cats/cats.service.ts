@@ -1,36 +1,38 @@
 import { Injectable } from '@nestjs/common';
+import { Cat } from './entities/cat.entity';
+import { RepositoryHelper } from '../utils/repository.helper';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Cat } from './entities/cat.entity';
-import { UtilsService } from 'src/utils/utils.service';
 
 @Injectable()
 export class CatsService {
   constructor(
     @InjectRepository(Cat)
-    private CatsRepository: Repository<Cat>,
-    private utilsService: UtilsService,
-  ) { }
+    private catsRepository: Repository<Cat>,
+    private repositoryHelper: RepositoryHelper<Cat>,
+  ) {
+    this.repositoryHelper = new RepositoryHelper<Cat>(Cat, this.catsRepository.manager, this.catsRepository.queryRunner);
+  }
 
   findAll(): Promise<Cat[]> {
-    return this.CatsRepository.find();
+    return this.repositoryHelper.find();
   }
 
   async findOne(id: string): Promise<Cat | null> {
-    return this.utilsService.findOneOrNotFound(this.CatsRepository, id);
+    return this.repositoryHelper.findOneOrNotFound(id);
   }
 
   async remove(id: string): Promise<void> {
-    const cat = await this.utilsService.findOneOrNotFound(this.CatsRepository, id);
-    if (cat) this.CatsRepository.delete(id);
+    const cat = await this.repositoryHelper.findOneOrNotFound(id);
+    if (cat) this.repositoryHelper.delete(id);
   }
 
   async create(cat: Cat): Promise<Cat> {
-    return this.CatsRepository.save(cat);
+    return this.repositoryHelper.save(cat);
   }
 
   async update(id: string, cat: Partial<Cat>): Promise<Cat> {
-    await this.CatsRepository.update(id, cat);
-    return this.CatsRepository.findOneBy({ id });
+    await this.repositoryHelper.update(id, cat);
+    return this.repositoryHelper.findOneBy({ id });
   }
 }

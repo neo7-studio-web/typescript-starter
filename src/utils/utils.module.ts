@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { UtilsService } from './utils.service';
+import { RepositoryHelper } from './repository.helper';
 
 @Module({
-  providers: [UtilsService],
-  exports: [UtilsService],
+  providers: [RepositoryHelper],
+  exports: [RepositoryHelper],
 })
 export class UtilsModule {}
