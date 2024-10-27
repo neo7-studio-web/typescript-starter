@@ -1,13 +1,16 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { IsEmail, IsNotEmpty } from 'class-validator';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ unique: true })
+  @IsEmail({}, { message: 'Invalid email' })
+  @Column({ nullable: false, unique: true })
   email: string;
 
-  @Column()
+  @IsNotEmpty()
+  @Column({ nullable: false })
   password: string;
 }
