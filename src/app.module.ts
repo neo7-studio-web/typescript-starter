@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { CatsModule } from './cats/cats.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { UtilsService } from './utils/utils.service';
 import { UtilsModule } from './utils/utils.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -22,9 +22,11 @@ import { UtilsModule } from './utils/utils.module';
     }),
     CatsModule,
     UtilsModule,
+    AuthModule,
+    UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, UtilsService],
+  controllers: [],
+  providers: [UtilsService],
 })
 export class AppModule {
   constructor(private dataSource: DataSource) {}
