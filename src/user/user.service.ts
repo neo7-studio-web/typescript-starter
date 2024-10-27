@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -15,7 +16,12 @@ export class UserService {
     }
 
     async create(user: Partial<User>): Promise<User> {
-        const newUser = this.usersRepository.create(user);
+        const existingUser = await this.findOne(user.email);
+        if (existingUser) {
+            throw new ConflictException('Email already exists');
+        }
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+        const newUser = this.usersRepository.create({ ...user, password: hashedPassword });
         const savedUser = await this.usersRepository.save(newUser);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { password, ...userWithoutPassword } = savedUser;

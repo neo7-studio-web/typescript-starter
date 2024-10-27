@@ -11,6 +11,6 @@ export class User {
   email: string;
 
   @IsNotEmpty()
-  @Column({ nullable: false })
+  @Column({ nullable: false, length: 60 }) // bcrypt password are 60 characters long
   password: string;
 }
