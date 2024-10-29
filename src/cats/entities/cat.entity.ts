@@ -1,22 +1,25 @@
-
-import { IsNotEmpty } from 'class-validator';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class Cat {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
-  @IsNotEmpty()
-  @Column({ nullable: false })
-  name: string;
+    @Column()
+    name: string;
 
-  @Column({ default: true })
-  isActive: boolean;
+    @Column()
+    age: number;
 
-  @CreateDateColumn()
-    createdDate: Date
+    @Column()
+    breed: string;
 
-  @UpdateDateColumn()
-  updatedDate: Date
+    @Column({ default: true })
+    isActive: boolean;
+
+    @CreateDateColumn()
+    createdOn: Date;
+
+    @UpdateDateColumn()
+    updatedOn: Date;
 }

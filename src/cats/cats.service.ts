@@ -27,7 +27,7 @@ export class CatsService {
     if (cat) this.repositoryHelper.delete(id);
   }
 
-  async create(cat: Cat): Promise<Cat> {
+  async create(cat: Partial<Cat>): Promise<Cat> {
     return this.repositoryHelper.save(cat);
   }
 

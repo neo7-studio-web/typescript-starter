@@ -1,16 +1,22 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { IsEmail, IsNotEmpty } from 'class-validator';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
-  @IsEmail({}, { message: 'Invalid email' })
-  @Column({ nullable: false, unique: true })
-  email: string;
+    @Column()
+    password: string;
 
-  @IsNotEmpty()
-  @Column({ nullable: false, length: 60 }) // bcrypt password are 60 characters long
-  password: string;
+    @Column({ unique: true })
+    email: string;
+
+    @Column({ default: true })
+    isActive: boolean;
+
+    @CreateDateColumn()
+    createdOn: Date;
+
+    @UpdateDateColumn()
+    updatedOn: Date;
 }

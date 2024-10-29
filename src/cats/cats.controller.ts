@@ -2,6 +2,8 @@ import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nes
 import { CatsService } from './cats.service';
 import { Cat } from './entities/cat.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { CreateCatDto } from './dto/create-cat.dto';
+import { UpdateCatDto } from './dto/update-cat.dto';
 
 @Controller('cats')
 @UseGuards(JwtAuthGuard)
@@ -19,13 +21,16 @@ constructor(private readonly catsService: CatsService) {}
   }
 
   @Post()
-  create(@Body() cat: Cat): Promise<Cat> {
-    return this.catsService.create(cat);
+  create(@Body() createCatDto: CreateCatDto): Promise<Cat> {
+    return this.catsService.create(createCatDto);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() cat: Cat): Promise<Cat> {
-    return this.catsService.update(id, cat);
+  update(
+    @Param('id') id: string,
+    @Body() updateCatDto: UpdateCatDto
+  ): Promise<Cat> {
+    return this.catsService.update(id, updateCatDto);
   }
 
   @Delete(':id')
