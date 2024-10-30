@@ -14,9 +14,9 @@ export class CatDto {
     @ApiProperty({ description: 'The active status of the cat', example: true })
     readonly isActive: boolean;
 
-    @ApiProperty({ description: 'The creation date of the cat', example: '2024-01-01' })
+    @ApiProperty({ description: 'The creation date of the cat', example: '2024-01-01'})
     readonly createdOn: Date;
 
-    @ApiProperty({ description: 'The update date of the cat', example: '2024-01-01' })
+    @ApiProperty({ description: 'The update date of the cat', example: '2024-01-01'})
     readonly updatedOn: Date;
 }
